@@ -1,7 +1,16 @@
+import { revalidateList } from '../lib/actions';
 import { Item } from '../lib/definitions';
 import ActionButton from './ActionButton';
 
-export default function ItemEntry({ item }: { item: Item }) {
+export default function ItemEntry({ 
+    item, 
+    setTargetItem,
+    setEditting,
+}: { 
+    item: Item, 
+    setTargetItem: (item: Item) => void ,
+    setEditting: () => void,
+}) {
     async function deleteItem() {
         const res = await fetch('http://localhost:3000/api/delete-item', {
             method: 'POST',
@@ -17,13 +26,19 @@ export default function ItemEntry({ item }: { item: Item }) {
             return;
         }
 
-        window.alert('Item excluido com sucesso');
+        revalidateList();
+    }
+
+    function editItem() {
+        setTargetItem(item);
+        setEditting();
     }
 
     return (
         <li>
-            <button>{item.quantity} {item.name}</button>
-            <ActionButton text='EXCLUIR' handler={deleteItem} />
+            <button>{item.quantity}x {item.name}</button>
+            <ActionButton handler={deleteItem}>EXCLUIR</ActionButton>
+            <ActionButton handler={editItem}>EDITAR</ActionButton>
         </li>
     );
 }
