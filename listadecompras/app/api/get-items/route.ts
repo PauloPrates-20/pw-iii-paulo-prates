@@ -1,14 +1,18 @@
 import { db } from '@/app/lib/firestore-config';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection, query, orderBy } from 'firebase/firestore';
 import { Item } from '@/app/lib/definitions';
 
 export async function GET() {
     const data: Item[] = [];
     let ok = true;
     const errors: string[] = [];
+    const q = query(
+        collection(db, 'items'),
+        orderBy('name')
+    );
 
     try {
-        const querySnapshot = await getDocs(collection(db, 'items'));
+        const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach(doc => {
             const docData = doc.data();
