@@ -1,10 +1,11 @@
 import { db } from '@/app/lib/firestore-config';
 import { getDocs, collection } from 'firebase/firestore';
-import { Item, Res } from '@/app/lib/definitions';
+import { Item } from '@/app/lib/definitions';
 
 export async function GET() {
     const data: Item[] = [];
-    const res: Res = { status: true, errors: [] };
+    let ok = true;
+    const errors: string[] = [];
 
     try {
         const querySnapshot = await getDocs(collection(db, 'items'));
@@ -22,9 +23,11 @@ export async function GET() {
             data.push(item);
         });
     } catch (error) {
-        res.status = false;
-        res.errors.push('Erro ao ler itens da lista');
+        ok = false;
+        errors.push('Erro ao ler itens da lista');
+
+        return Response.json({ ok, errors });
     }
 
-    return Response.json({ res, data });
+    return Response.json({ ok, data });
 }

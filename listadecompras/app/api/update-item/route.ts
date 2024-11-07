@@ -1,10 +1,11 @@
 import { db } from '@/app/lib/firestore-config';
 import { updateDoc, doc } from 'firebase/firestore';
-import { Item, ItemData, Res } from '@/app/lib/definitions';
+import { Item, ItemData } from '@/app/lib/definitions';
 
 export async function POST(request: Request) {
     const data = await request.json() as Item;
-    const res: Res = { status: true, errors: [] };
+    let ok = true;
+    const errors: string[] = [];
 
     try {
         const docData: ItemData = {
@@ -15,9 +16,11 @@ export async function POST(request: Request) {
 
         await updateDoc(doc(db, 'items', data.id), { ...docData });
     } catch (error) {
-        res.status = false;
-        res.errors.push('Erro ao editar item');
+        ok = false;
+        errors.push('Erro ao editar item');
+
+        return Response.json({ ok, errors });
     }
 
-    return Response.json({ res });
+    return Response.json({ ok });
 }
