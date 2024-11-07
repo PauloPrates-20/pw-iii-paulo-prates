@@ -24,14 +24,17 @@ export default function ItemList({ items }: { items: Item[] }) {
     }
 
     return (
-        <div>
-            <h3>Lista de Compras</h3>
-            <ul>
+        <div className='w-full'>
+            <h3 className='text-center font-bold m-2'>Lista de Compras</h3>
+            <ul className='flex flex-col justify-start items-start gap-1 my-4'>
                 {items.map((item: Item, index: number) => (
                     <ItemEntry item={item} setTargetItem={updateTargetItem} setEditting={toggleEdittingState} key={index} />
                 ))}
-                {!adding ? !editting ? <ActionButton handler={toggleAddingState}>ADICIONAR ITEM</ActionButton> : <ItemForm setEditing={toggleEdittingState} targetItem={targetItem} /> : <ItemForm setAdding={toggleAddingState} />}
             </ul>
+            {!adding ? !editting ? 
+            <ActionButton handler={toggleAddingState}>+</ActionButton> : 
+            <ItemForm setEditing={toggleEdittingState} targetItem={targetItem} /> : 
+            <ItemForm setAdding={toggleAddingState} />}
         </div>
     );
 }

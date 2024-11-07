@@ -89,23 +89,27 @@ export default function ItemForm({
     }
 
     return (
-        <div>
-            <input 
-                type='number' 
-                required 
-                onChange={changeQuantity} 
-                defaultValue={quantity} 
-                placeholder='QUANTIDADE' 
-            />
-            <input 
-                type='text' 
-                required 
-                onChange={changeName} 
-                defaultValue={name}
-                placeholder='NOME' 
-            />
-            <ActionButton handler={targetItem ? updateItem : addItem} >SALVAR</ActionButton>
-            <ActionButton handler={cancelItem} >CANCELAR</ActionButton>
+        <div className='w-full flex flex-row justify-between items-center'>
+            <div className='flex flex-row justify-start items-center gap-1'>
+                <input className='w-10 border-b-2 border-solid border-black'
+                    type='number' 
+                    required 
+                    onChange={changeQuantity} 
+                    defaultValue={quantity} 
+                    placeholder='QUANTIDADE' 
+                />
+                <input className='w-32 border-b-2 border-solid border-black' 
+                    type='text' 
+                    required 
+                    onChange={changeName} 
+                    defaultValue={name}
+                    placeholder='NOME' 
+                />
+            </div>
+            <div>
+                <ActionButton handler={targetItem ? updateItem : addItem} >SALVAR</ActionButton>
+                <ActionButton color='rgb(189, 45, 45)' handler={cancelItem} >CANCELAR</ActionButton>
+            </div>
         </div>
     );
 }

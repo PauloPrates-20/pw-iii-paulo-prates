@@ -7,7 +7,7 @@ export default async function Home() {
   const items: Item[] = jsonData.ok ? jsonData.data : [];
 
   return (
-    <div>
+    <div className='min-w-fit w-96 min-h-96 border border-solid border-black p-2 flex flex-col justify-start items-start rounded'>
       <ItemList items={items} />
     </div>
   );

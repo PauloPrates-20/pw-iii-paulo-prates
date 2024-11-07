@@ -35,10 +35,19 @@ export default function ItemEntry({
     }
 
     return (
-        <li>
-            <button>{item.quantity}x {item.name}</button>
-            <ActionButton handler={deleteItem}>EXCLUIR</ActionButton>
-            <ActionButton handler={editItem}>EDITAR</ActionButton>
+        <li className='w-full flex flex-row justify-between items-center'>
+            <button className='flex flex-row justify-start items-center gap-1'>
+                <span>
+                    {item.quantity}x
+                </span>
+                <span>
+                    {item.name}
+                </span>
+            </button>
+            <div className='flex flex-row justify-between items-center gap-1'>
+                <ActionButton handler={editItem}>EDITAR</ActionButton>
+                <ActionButton color='rgb(189, 45, 45)' handler={deleteItem}>EXCLUIR</ActionButton>
+            </div>
         </li>
     );
 }
